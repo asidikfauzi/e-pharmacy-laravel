@@ -10,6 +10,7 @@
             Schema::create('categories', function (Blueprint $table) {
                 $table->id();
                 $table->string('nama');
+                $table->text('deskripsi');
                 $table->timestamps();
                 $table->softDeletes();
             });
