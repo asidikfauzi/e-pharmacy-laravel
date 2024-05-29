@@ -40,10 +40,12 @@
 					</div>
 					<div class="col-lg-3">
 						<div class="categories__item set-bg">
-							<center>
-								<img src="{{asset('assets/img/app/category.png')}}" style="width: 200px; height: 200px">
-							</center>
-							<h5><a href="#">Kategori Produk</a></h5>
+							<a href="{{route('admin.category.index')}}">
+								<center>
+									<img src="{{asset('assets/img/app/category.png')}}" style="width: 200px; height: 200px">
+								</center>
+								<h5>Kategori Produk</h5>
+							</a>
 						</div>
 					</div>
 					<div class="col-lg-3">

@@ -30,6 +30,17 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('h
 //Admin
 Route::group(['prefix'=>'admin', 'middleware'=>['admin','auth'], 'as' => 'admin.'], function(){
     Route::get('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('index');
+    
+    //Category
+    Route::group(['prefix'=>'category', 'as' => 'category.'], function() {
+        Route::get('/', [\App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('index');
+        Route::get('/get-data', [\App\Http\Controllers\Admin\CategoryController::class, 'getData'])->name('getData');
+        Route::get('/create', [\App\Http\Controllers\Admin\CategoryController::class, 'create'])->name('create');
+        Route::post('/create', [\App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('store');
+        Route::get('/{id}/update', [\App\Http\Controllers\Admin\CategoryController::class, 'edit'])->name('edit');
+        Route::put('/{id}/update', [\App\Http\Controllers\Admin\CategoryController::class, 'update'])->name('update');
+        Route::get('/{id}/destroy', [\App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name('destroy');
+    });
 });
 
 //User

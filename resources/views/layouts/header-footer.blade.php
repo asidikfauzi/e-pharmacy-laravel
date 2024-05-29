@@ -84,7 +84,8 @@
 									<i class="fa fa-user"></i> {{ Auth::user()->email }}
 								</a>
 								<div class="dropdown-menu">
-									<a class="dropdown-item" href="">Change Password</a>
+									<a class="dropdown-item" href="{{route('admin.index')}}">Dashboard</a>
+									<a class="dropdown-item" href="{{route('password')}}">Change Password</a>
 									<a class="dropdown-item" style="color: red" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
 								</div>
 							</div>
@@ -180,7 +181,7 @@
 <script src="{{asset('assets/js/mixitup.min.js')}}"></script>
 <script src="{{asset('assets/js/owl.carousel.min.js')}}"></script>
 <script src="{{asset('assets/js/main.js')}}"></script>
-
+@yield('script')
 
 
 </body>
