@@ -16,7 +16,7 @@
                 $table->string('nota')->unique();
                 $table->json('list_produk');
                 $table->string('total');
-                $table->string('image');
+                $table->string('image')->nullable();;
                 $table->boolean('status')->default(false);
                 $table->timestamps();
                 $table->softDeletes();

@@ -17,8 +17,8 @@
                 $table->string('no_telp');
                 $table->date('tgl_lahir');
                 $table->string('jenis_kelamin');
-                $table->string('bio');
-                $table->string('image');
+                $table->string('bio')->nullable();
+                $table->string('image')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
             });
