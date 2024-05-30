@@ -9,7 +9,7 @@
 					<div class="breadcrumb__text">
 						<h2>Dashboard Admin</h2>
 						<div class="breadcrumb__option">
-							<a href="{{route('home')}}">Utama</a>
+							<a href="{{route('admin.index')}}">Halaman Utama</a>
 							<span>Dashboard Admin</span>
 						</div>
 					</div>
@@ -32,10 +32,12 @@
 					</div>
 					<div class="col-lg-3">
 						<div class="categories__item set-bg">
-							<center>
-								<img src="{{asset('assets/img/app/product.png')}}" style="width: 200px; height: 200px">
-							</center>
-							<h5><a href="#">Produk</a></h5>
+							<a href="{{route('admin.product.index')}}">
+								<center>
+									<img src="{{asset('assets/img/app/product.png')}}" style="width: 200px; height: 200px">
+								</center>
+								<h5><a href="#">Produk</a></h5>
+							</a>
 						</div>
 					</div>
 					<div class="col-lg-3">
@@ -44,7 +46,7 @@
 								<center>
 									<img src="{{asset('assets/img/app/category.png')}}" style="width: 200px; height: 200px">
 								</center>
-								<h5>Kategori Produk</h5>
+								<h5><a href="{{route('admin.category.index')}}">Kategori Produk</a></h5>
 							</a>
 						</div>
 					</div>

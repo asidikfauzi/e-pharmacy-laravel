@@ -10,4 +10,9 @@
         use SoftDeletes;
         protected $table = 'products';
         protected $guarded = [];
+        
+        public function categories()
+        {
+            return $this->belongsToMany(Category::class, 'product_has_categories', 'product_id', 'category_id');
+        }
     }

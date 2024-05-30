@@ -41,6 +41,17 @@ Route::group(['prefix'=>'admin', 'middleware'=>['admin','auth'], 'as' => 'admin.
         Route::put('/{id}/update', [\App\Http\Controllers\Admin\CategoryController::class, 'update'])->name('update');
         Route::get('/{id}/destroy', [\App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name('destroy');
     });
+    
+    //Products
+    Route::group(['prefix'=>'product', 'as' => 'product.'], function() {
+        Route::get('/', [\App\Http\Controllers\Admin\ProductController::class, 'index'])->name('index');
+        Route::get('/get-data', [\App\Http\Controllers\Admin\ProductController::class, 'getData'])->name('getData');
+        Route::get('/create', [\App\Http\Controllers\Admin\ProductController::class, 'create'])->name('create');
+        Route::post('/create', [\App\Http\Controllers\Admin\ProductController::class, 'store'])->name('store');
+        Route::get('/{id}/update', [\App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('edit');
+        Route::put('/{id}/update', [\App\Http\Controllers\Admin\ProductController::class, 'update'])->name('update');
+        Route::get('/{id}/destroy', [\App\Http\Controllers\Admin\ProductController::class, 'destroy'])->name('destroy');
+    });
 });
 
 //User
