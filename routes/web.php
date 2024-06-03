@@ -26,6 +26,7 @@ Route::get('/change-password', [\App\Http\Controllers\Auth\PasswordController::c
 Route::put('/change-password', [\App\Http\Controllers\Auth\PasswordController::class, 'update'])->name('password');
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/shop', [\App\Http\Controllers\HomeController::class, 'shop'])->name('shop');
 
 //Admin
 Route::group(['prefix'=>'admin', 'middleware'=>['admin','auth'], 'as' => 'admin.'], function(){
