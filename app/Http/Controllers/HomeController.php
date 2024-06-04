@@ -50,4 +50,26 @@
             
             return view('shop', compact('categories', 'products', 'count'));
         }
+        
+        public function show($id)
+        {
+            $product = Product::findOrFail($id);
+            $categories = Category::select('categories.*')
+                ->join('product_has_categories as phs', 'phs.category_id', '=', 'categories.id')
+                ->where('phs.product_id', $product->id)
+                ->whereNull('phs.deleted_at')
+                ->get();
+            
+            $categoryName = "";
+            foreach ($categories as $key => $category) {
+                if($key > 0 ){
+                    $categoryName .= ", ";
+                }
+                $categoryName .= $category->nama;
+            }
+            
+            $product->categories = $categoryName;
+            
+            return view('detail', compact('product'));
+        }
     }

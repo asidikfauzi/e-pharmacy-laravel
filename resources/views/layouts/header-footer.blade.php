@@ -103,7 +103,7 @@
 			<div class="col-lg-3">
 				<div class="header__cart">
 					<ul>
-						<li><a href="#"><i class="fa fa-shopping-bag"></i></a></li>
+						<li><a href="{{route('user.cart.index')}}"><i class="fa fa-shopping-bag"></i></a></li>
 					</ul>
 				</div>
 			</div>
@@ -148,6 +148,5 @@
 	</div>
 </footer>
 <!-- Footer Section End -->
-
 
 @endsection

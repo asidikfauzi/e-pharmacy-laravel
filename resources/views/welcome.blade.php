@@ -6,7 +6,7 @@
 		<span>E-Apotek</span>
 		<h2>Apotek Online Paling Komplit <br />100% Asli</h2>
 		<p>Tersedia Penjemputan dan Pengiriman Gratis</p>
-		<a href="#" class="primary-btn">Balanja Sekarang</a>
+		<a href="{{route('shop')}}" class="primary-btn">Belanja Sekarang</a>
 
 	</div>
 </div>
@@ -57,11 +57,11 @@
 					<div class="featured__item">
 						<div class="featured__item__pic set-bg" data-setbg="{{ asset('assets/images/product/'.$value->image) }}">
 							<ul class="featured__item__pic__hover">
-								<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+								<li><a href="{{route('user.cart.store', $value->id)}}"><i class="fa fa-shopping-cart"></i></a></li>
 							</ul>
 						</div>
 						<div class="featured__item__text">
-							<h6><a href="#">{{$value->nama}}</a></h6>
+							<h6><a href="{{route('detail', $value->id)}}">{{$value->nama}}</a></h6>
 							<h5>Rp. {{number_format($value->price, 0, ',')}}</h5>
 						</div>
 					</div>

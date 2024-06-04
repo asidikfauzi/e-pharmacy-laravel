@@ -27,6 +27,7 @@ Route::put('/change-password', [\App\Http\Controllers\Auth\PasswordController::c
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/shop', [\App\Http\Controllers\HomeController::class, 'shop'])->name('shop');
+Route::get('/detail/{id}', [\App\Http\Controllers\HomeController::class, 'show'])->name('detail');
 
 //Admin
 Route::group(['prefix'=>'admin', 'middleware'=>['admin','auth'], 'as' => 'admin.'], function(){
@@ -58,4 +59,10 @@ Route::group(['prefix'=>'admin', 'middleware'=>['admin','auth'], 'as' => 'admin.
 //User
 Route::group(['prefix'=>'user', 'middleware'=>['user','auth'], 'as' => 'user.'], function(){
     Route::get('/profile', [\App\Http\Controllers\User\ProfileController::class, 'index'])->name('index');
+    Route::put('/profile', [\App\Http\Controllers\User\ProfileController::class, 'update'])->name('update');
+    
+    //cart
+    Route::get('/chart', [\App\Http\Controllers\User\CartController::class, 'index'])->name('cart.index');
+    Route::get('/chart/{id}', [\App\Http\Controllers\User\CartController::class, 'store'])->name('cart.store');
+    Route::post('/chart/{id}', [\App\Http\Controllers\User\CartController::class, 'create'])->name('cart.store');
 });

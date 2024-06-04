@@ -7,22 +7,22 @@
 	</style>
 	<section class="ftco-section">
 		<div class="container py-5">
-			<form action="#" method="POST" enctype="multipart/form-data">
+			<form action="{{route('user.update')}}" method="POST" enctype="multipart/form-data">
 				@csrf
 				@method('PUT')
 				<div class="row">
 					<div class="col-lg-4">
 						<div class="card mb-4">
 							<div class="card-body text-center">
-								<a href="{{asset('images/selfie/'. $data->foto_selfie)}}" target="_blank">
-									<img src="{{asset('images/selfie/'. $data->foto_selfie)}}" alt="foto_selfie"
-									     class="rounded-circle img-fluid" style="width: 150px; max-height: 150px">
+								<a href="{{asset('assets/images/user/'. $user->image)}}" target="_blank">
+									<img src="{{asset('assets/images/user/'. $user->image)}}" alt="image"
+									     class="img-fluid" style="width: 150px; max-height: 150px">
 								</a>
 								<div class="col-lg-12 mt-3">
 									<div class="btn btn-primary">
 										<div class="btn_upload">
-											<input type="file" id="upload_file" name="foto_selfie">
-											Upload Foto Profile
+											<input type="file" id="upload_file" name="image">
+											Upload Foto
 										</div>
 									</div>
 								</div>
@@ -37,7 +37,7 @@
 										<p class="mb-0">Nama Lengkap</p>
 									</div>
 									<div class="col-sm-8">
-										<input type="text" name="nama" class="mb-0 w-100" value="{{$data->nama}}" placeholder="Nama Lengkap">
+										<input type="text" name="nama" class="mb-0 w-100" value="{{$user->nama}}" placeholder="Nama Lengkap">
 									</div>
 								</div>
 								<hr>
@@ -46,7 +46,7 @@
 										<p class="mb-0">No Telp</p>
 									</div>
 									<div class="col-sm-8">
-										<input type="number" name="no_telp" class="mb-0 w-100" value="{{$data->no_telp}}" placeholder="No Telephone">
+										<input type="number" name="no_telp" class="mb-0 w-100" value="{{$user->no_telp}}" placeholder="No Telephone">
 									</div>
 								</div>
 								<hr>
@@ -55,7 +55,7 @@
 										<p class="mb-0">Tanggal Lahir</p>
 									</div>
 									<div class="col-sm-8">
-										<input type="text" name="nik" class="mb-0 w-100" value="{{$data->nik}}" placeholder="NIK">
+										<input type="date" name="tgl_lahir" class="mb-0 w-100" value="{{$user->tgl_lahir}}" placeholder="Tgl Lahir">
 									</div>
 								</div>
 								<hr>
@@ -66,50 +66,24 @@
 									<div class="col-sm-8">
 										<select id="jenis_kelamin" name="jenis_kelamin" class="text-muted mb-0 w100">
 											<option value="">--Pilih Jenis Kelamin--</option>
-											<option value="laki-laki" {{ $data->jenis_kelamin == "laki-laki" ? 'selected' : '' }}>Laki-laki</option>
-											<option value="perempuan" {{ $data->jenis_kelamin == "perempuan" ? 'selected' : '' }}>Perempuan</option>
+											<option value="Laki-laki" {{ $user->jenis_kelamin == "Laki-laki" ? 'selected' : '' }}>Laki-laki</option>
+											<option value="Perempuan" {{ $user->jenis_kelamin == "Perempuan" ? 'selected' : '' }}>Perempuan</option>
 										</select>
 									</div>
 								</div>
 								<hr>
 								<div class="row">
 									<div class="col-sm-4">
-										<p class="mb-0">Alamat</p>
+										<p class="mb-0">Bio</p>
 									</div>
 									<div class="col-sm-8">
-										<input type="text" name="alamat" class="mb-0 w-100" value="{{$data->alamat}}" placeholder="Alamat">
+										<input type="text" name="bio" class="mb-0 w-100" value="{{$user->bio}}" placeholder="Alamat">
 									</div>
 								</div>
 								<hr>
-								<div class="row">
-									<div class="col-sm-4">
-										<p class="mb-0">Agama</p>
-									</div>
-									<div class="col-sm-8">
-										<input type="text" name="agama" class="w-100" value="{{$data->agama}}" placeholder="Agama">
-									</div>
-								</div>
-								<hr>
-								<div class="row">
-									<div class="col-sm-4">
-										<p class="mb-0">Pekerjaan</p>
-									</div>
-									<div class="col-sm-8">
-										<input type="text" name="pekerjaan" class="w-100" value="{{$data->pekerjaan}}" placeholder="Pekerjaan">
-									</div>
-								</div>
-								<hr>
-								<div class="row">
-									<div class="col-sm-4">
-										<p class="mb-0">Kewarganegaraan</p>
-									</div>
-									<div class="col-sm-8">
-										<input type="text" name="kewarganegaraan" class="w-100" value="{{$data->kewarganegaraan}}" placeholder="Kewarganegaraan">
-									</div>
-								</div>
 								<div class="row mt-3">
 									<div class="col-sm-12">
-										<button class="btn btn-primary mb-0 float-right">Simpan</button>
+										<button class="btn primary-btn mb-0 float-right">Simpan</button>
 									</div>
 								</div>
 							</div>
