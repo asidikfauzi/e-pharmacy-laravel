@@ -65,4 +65,13 @@ Route::group(['prefix'=>'user', 'middleware'=>['user','auth'], 'as' => 'user.'],
     Route::get('/chart', [\App\Http\Controllers\User\CartController::class, 'index'])->name('cart.index');
     Route::get('/chart/{id}', [\App\Http\Controllers\User\CartController::class, 'store'])->name('cart.store');
     Route::post('/chart/{id}', [\App\Http\Controllers\User\CartController::class, 'create'])->name('cart.store');
+    Route::get('/chart/delete/{id}', [\App\Http\Controllers\User\CartController::class, 'destroy'])->name('cart.destroy');
+    
+    //payments
+    Route::get('/payment/{id}', [\App\Http\Controllers\User\PaymentController::class, 'index'])->name('payment.index');
+    Route::post('/payment', [\App\Http\Controllers\User\PaymentController::class, 'store'])->name('payment.store');
+    Route::put('/payment/{id}', [\App\Http\Controllers\User\PaymentController::class, 'update'])->name('payment.update');
+    
+    //history
+    Route::get('/history', [\App\Http\Controllers\User\HistoryController::class, 'index'])->name('history.index');
 });

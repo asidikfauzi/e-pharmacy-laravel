@@ -10,4 +10,13 @@
         use SoftDeletes;
         protected $table = 'payments';
         protected $guarded = [];
+        
+        public static function generateInvoiceCode()
+        {
+            do {
+                $code = 'INV-' . strtoupper(\Str::random(8));
+            } while (self::where('nota', $code)->exists());
+            
+            return $code;
+        }
     }

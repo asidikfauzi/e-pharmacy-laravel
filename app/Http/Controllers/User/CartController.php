@@ -18,15 +18,20 @@
                 'p.nama',
                 'p.price',
                 'p.image',
+                'c.id as id_cart',
                 \DB::raw('SUM(carts.jumlah) as total_quantity')
             )
-                ->where('carts.user_id', $userId)
                 ->join('products as p', 'p.id', '=', 'carts.product_id')
-                ->groupBy('p.id', 'p.nama', 'p.price')
+                ->join(\DB::raw('(SELECT MIN(id) as id, product_id FROM carts GROUP BY product_id) as c'), function($join) {
+                    $join->on('c.product_id', '=', 'carts.product_id');
+                })
+                ->where('carts.user_id', $userId)
+                ->groupBy('p.id', 'p.nama', 'p.price', 'p.image', 'c.id')
                 ->get();
             
             $total = 0;
             foreach ($carts as $cart) {
+                
                 $total += $cart->total_quantity * $cart->price;
             }
             
@@ -55,6 +60,15 @@
             
             Alert::success('Sukses', 'Berhasil Menambah Keranjang');
             return redirect()->back();
+        }
+        
+        public function destroy($id)
+        {
+            $cart = Cart::find($id);
+            $cart->delete();
+            
+            Alert::success('Sukses', 'Berhasil Menghapus Keranjang');
+            return redirect()->route('user.cart.index');
         }
     }
     

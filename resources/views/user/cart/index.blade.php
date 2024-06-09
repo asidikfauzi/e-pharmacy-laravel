@@ -47,19 +47,15 @@
 									</td>
 									<td class="shoping__cart__quantity">
 										<div class="quantity">
-											<div class="pro-qty quantity-input">
-												<input type="text" name="jumlah" value="{{$value->total_quantity}}"
-												       class="quantity-input"
-												       id="quantity-input"
-												       data-product-id="{{$value->id}}"
-												       data-price="{{$value->price}}">
+											<div class="pro-qty quantity-input" data-product-id="{{$value->id}}" data-price="{{$value->price}}">
+												<input type="text" name="jumlah" class="quantity-input" value="{{$value->total_quantity}}">
 											</div>
 										</div>
 									</td>
 									<td class="shoping__cart__total" id="total-{{$value->id}}">
 										Rp. {{number_format($value->price * $value->total_quantity, 0, ',')}}
 									</td>
-									<td class="shoping__cart__item__close">
+									<td class="shoping__cart__item__close modal-deletetab" data-id="{{$value->id_cart}}">
 										<span class="icon_close"></span>
 									</td>
 								</tr>
@@ -83,14 +79,17 @@
 					</div>
 				</div>
 				<div class="col-lg-6">
-					<div class="shoping__checkout">
-						<h5>Cart Total</h5>
-						<ul>
-{{--							<li>Subtotal <span>Rp. {{number_format()}}</span></li>--}}
-							<li>Total <span>Rp. {{number_format($total, 0, ',')}}</span></li>
-						</ul>
-						<a href="#" class="primary-btn">LANJUTKAN PEMBAYARAN</a>
-					</div>
+					<form method="POST" action="{{route('user.payment.store')}}">
+						@csrf
+						<div class="shoping__checkout">
+							<h5>Cart Total</h5>
+							<ul>
+								<li>Total <span id="cart-total-amount">Rp. {{number_format($total, 0, ',')}}</span></li>
+							</ul>
+							<button type="submit" class="btn primary-btn" style="width: 100%">LANJUTKAN PEMBAYARAN</button>
+
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -100,25 +99,62 @@
 
 @section('script')
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script>
         $(document).ready(function() {
-
-            console.log("asds")
-            $('.quantity-input').on('input', function() {
-                console.log()
-                var quantity = $(this).val();
-                var price = $(this).data('price');
-                var productId = $(this).data('product-id');
-
-                console.log("Quantity: ", quantity);
-                console.log("Price: ", price);
-                console.log("Product ID: ", productId);
+            function updateTotal(element) {
+                var quantity = element.find('input.quantity-input').val();
+                var price = element.data('price');
+                var productId = element.data('product-id');
 
                 var newTotal = price * quantity;
 
                 // Update the total in the DOM
                 $('#total-' + productId).text('Rp. ' + newTotal.toLocaleString());
+
+                updateCartTotal();
+            }
+
+            function updateCartTotal() {
+                var cartTotal = 0;
+                $('.shoping__cart__total').each(function() {
+                    var totalText = $(this).text().replace('Rp. ', '').replace(/,/g, '');
+                    var totalValue = parseFloat(totalText) || 0;
+                    cartTotal += totalValue;
+                });
+                $('#cart-total-amount').text('Rp. ' + cartTotal.toLocaleString());
+            }
+
+            // Handle click on div
+            $('.pro-qty').on('click', function() {
+                updateTotal($(this));
+            });
+
+            // Handle input change on input field
+            $('input.quantity-input').on('input', function() {
+                updateTotal($(this).closest('.pro-qty'));
+            });
+
+            $("body").on("click", ".modal-deletetab", function() {
+                var itemId = $(this).attr('data-id');
+                swal({
+                    title: "Yakin?",
+                    text: "kamu akan menghapus data ini ?",
+                    icon: "warning",
+                    buttons: ["Batal", "OK"],
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        window.location = "/user/chart/delete/"+itemId
+                        swal("Data berhasil dihapus", {
+                            icon: "success",
+                        });
+                    } else {
+                        swal("Data Tidak Jadi dihapus");
+                    }
+                });
             });
         });
 	</script>
 @endsection
+
