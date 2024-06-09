@@ -22,7 +22,7 @@
 		<div class="container">
 			<div class="checkout__form">
 				<h4>Detil Pemesan</h4>
-				<form action="{{route('user.payment.update', $payments->id)}}" method="POST">
+				<form action="{{route('user.payment.update', $payments->id)}}" method="POST" enctype="multipart/form-data">
 					@csrf
 					@method('PUT')
 					<div class="row">
@@ -72,7 +72,7 @@
 							<div class="checkout__input">
 								<div class="checkout__input">
 									<p>Address<span>*</span></p>
-									<select class="checkout__input">
+									<select class="checkout__input" name="alamat">
 										<option value="">Pilih Alamat</option>
 										@foreach($addresses as $value)
 											<option value="{{$value->id}}">{{$value->jalan}}, {{$value->kota}}, {{$value->provinsi}}, {{$value->kode_pos}}, {{$value->negara}}</option>

@@ -61,8 +61,13 @@
 									<i class="fa fa-user"></i> {{ Auth::user()->email }}
 								</a>
 								<div class="dropdown-menu">
-									<a class="dropdown-item" href="{{route('admin.index')}}">Dashboard</a>
-									<a class="dropdown-item" href="{{route('password')}}">Change Password</a>
+									@if(Auth::user()->role == 'admin')
+										<a class="dropdown-item" href="{{route('admin.index')}}">Dashboard</a>
+									@else
+										<a class="dropdown-item" href="{{route('user.index')}}">Profile</a>
+									@endif
+									<a class="dropdown-item" href="{{route('user.address.index')}}">Alamat</a>
+									<a class="dropdown-item" href="{{route('password')}}">Ganti Password</a>
 									<a class="dropdown-item" style="color: red" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
 								</div>
 							</div>

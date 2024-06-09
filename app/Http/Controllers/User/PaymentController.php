@@ -8,7 +8,7 @@
     use App\Models\Cart;
     use App\Models\Payment;
     use App\Models\Person;
-    use Illuminate\Support\Facades\Request;
+    use Illuminate\Http\Request;
     use RealRashid\SweetAlert\Facades\Alert;
     
     class PaymentController extends Controller
@@ -25,7 +25,9 @@
             
             $payments = Payment::find($id);
             
-            $listProducts = json_decode($payments->list_produk);
+            
+            $dataListProducts = json_decode($payments->list_produk);
+            $listProducts = $dataListProducts->list_products;
             
             return view('user.payment.index', compact('person', 'addresses', 'payments', 'listProducts'));
         }
@@ -44,11 +46,17 @@
                     'id' => $cart->id,
                     'nama' => $cart->nama,
                     'price' => $cart->price,
+                    'image' => Storage::getImageProduct($cart->image),
                 ];
                 $total += $cart->price;
             }
             
-            $listProductsJson = json_encode($listProducts);
+            $dataList = [
+                'list_products' => $listProducts,
+                'alamat' => "",
+            ];
+            
+            $listProductsJson = json_encode($dataList);
             
             $payment = new Payment();
             $payment->user_id = auth()->user()->id;
@@ -72,6 +80,12 @@
             Cart::where('user_id', auth()->user()->id)->whereNull('deleted_at')->delete();
             
             $payment = Payment::find($id);
+            
+            $dataListProduct = json_decode($payment->list_produk);
+            $dataListProduct->alamat = $request->alamat;
+            $listProducts = json_encode($dataListProduct);
+            
+            $payment->list_produk = $listProducts;
             $payment->image = Storage::uploadImageBuktiTF($request->file('image'));
             $payment->save();
             

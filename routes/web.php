@@ -61,6 +61,15 @@ Route::group(['prefix'=>'user', 'middleware'=>['user','auth'], 'as' => 'user.'],
     Route::get('/profile', [\App\Http\Controllers\User\ProfileController::class, 'index'])->name('index');
     Route::put('/profile', [\App\Http\Controllers\User\ProfileController::class, 'update'])->name('update');
     
+    //address
+    Route::get('/address', [\App\Http\Controllers\User\AddressController::class, 'index'])->name('address.index');
+    Route::get('/address/create', [\App\Http\Controllers\User\AddressController::class, 'create'])->name('address.create');
+    Route::post('/address/create', [\App\Http\Controllers\User\AddressController::class, 'store'])->name('address.store');
+    Route::get('/address/edit/{id}', [\App\Http\Controllers\User\AddressController::class, 'edit'])->name('address.edit');
+    Route::put('/address/edit/{id}', [\App\Http\Controllers\User\AddressController::class, 'update'])->name('address.update');
+    Route::get('/address/destroy/{id}', [\App\Http\Controllers\User\AddressController::class, 'destroy'])->name('address.destroy');
+    
+    
     //cart
     Route::get('/chart', [\App\Http\Controllers\User\CartController::class, 'index'])->name('cart.index');
     Route::get('/chart/{id}', [\App\Http\Controllers\User\CartController::class, 'store'])->name('cart.store');
@@ -74,4 +83,6 @@ Route::group(['prefix'=>'user', 'middleware'=>['user','auth'], 'as' => 'user.'],
     
     //history
     Route::get('/history', [\App\Http\Controllers\User\HistoryController::class, 'index'])->name('history.index');
+    Route::get('/history/get-data', [\App\Http\Controllers\User\HistoryController::class, 'getData'])->name('history.getData');
+    Route::get('/history/show', [\App\Http\Controllers\User\HistoryController::class, 'show'])->name('history.show');
 });
