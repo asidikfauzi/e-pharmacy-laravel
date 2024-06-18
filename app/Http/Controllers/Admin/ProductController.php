@@ -1,7 +1,7 @@
 <?php
-    
+
     namespace App\Http\Controllers\Admin;
-    
+
     use App\Helper\Storage;
     use App\Http\Controllers\Controller;
     use App\Models\Category;
@@ -10,25 +10,25 @@
     use Illuminate\Http\Request;
     use RealRashid\SweetAlert\Facades\Alert;
     use Yajra\DataTables\Facades\DataTables;
-    
+
     class ProductController extends Controller
     {
         public function index()
         {
             return view('admin.product.index');
         }
-        
+
         public function getData()
         {
             $products = Product::all();
-            
+
             foreach ($products as $value) {
                 $categories = Category::select('categories.*')
                     ->join('product_has_categories as phs', 'phs.category_id', '=', 'categories.id')
                     ->where('phs.product_id', $value->id)
                     ->whereNull('phs.deleted_at')
                     ->get();
-                
+
                 $categoryName = "";
                 foreach ($categories as $key => $category) {
                     if($key > 0 ){
@@ -36,10 +36,10 @@
                     }
                     $categoryName .= $category->nama;
                 }
-                
+
                 $value->categories = $categoryName;
             }
-            
+
             return DataTables::of($products)->addIndexColumn()
                 ->addColumn('edit', function($row){
                     return
@@ -69,19 +69,19 @@
                     'image'
                 ])->make(true);
         }
-        
+
         public function create()
         {
             $categories = Category::all();
             $index = 0;
-            
+
             return view('admin.product.create', compact('categories', 'index'));
         }
-        
+
         public function store(Request $request)
         {
             \DB::beginTransaction();
-            
+
             try
             {
                 $product = new Product();
@@ -99,49 +99,50 @@
                 $product->golongan_produk = $request->golongan_produk;
                 $product->kemasan = $request->kemasan;
                 $product->manufaktur = $request->manufaktur;
-                
+
                 if ($request->hasFile('image')) {
                     $image = Storage::uploadImageProduct($request->file('image'));
                     $product->image = $image;
                 }
                 $product->save();
-                
-                
+
+
                 foreach ($request->categories as $category) {
                     $productCategory = new ProductHasCategories();
                     $productCategory->product_id = $product->id;
                     $productCategory->category_id = $category;
                     $productCategory->save();
                 }
-                
+
                 \DB::commit();
-                
+
                 Alert::success('Success', 'Sukses menambah data product');
                 return redirect()->route('admin.product.index');
-                
+
             } catch (\Exception $e) {
                 \DB::rollback();
                 Alert::error('Error', $e->getMessage());
                 return back();
             }
         }
-        
+
         public function edit($id)
         {
+            $index = 0;
             $product = Product::find($id);
             $categories = Category::all();
             $selectedCategories = $product->categories()
                 ->whereNull('product_has_categories.deleted_at')
                 ->pluck('categories.id')
                 ->toArray();
-            
-            return view('admin.product.update', compact('product','categories', 'selectedCategories'));
+
+            return view('admin.product.update', compact('product','categories', 'selectedCategories', 'index'));
         }
-        
+
         public function update(Request $request, $id)
         {
             \DB::beginTransaction();
-            
+
             try
             {
                 $product = Product::find($id);
@@ -159,43 +160,43 @@
                 $product->golongan_produk = $request->golongan_produk;
                 $product->kemasan = $request->kemasan;
                 $product->manufaktur = $request->manufaktur;
-                
+
                 if ($request->hasFile('image')) {
                     $image = Storage::uploadImageProduct($request->file('image'));
                     $product->image = $image;
                 }
                 $product->save();
-                
+
                 $categories = ProductHasCategories::where('product_id', $id)->get();
-                
+
                 foreach ($categories as $value) {
                     $value->delete();
                 }
-                
+
                 foreach ($request->categories as $category) {
                     $productCategory = new ProductHasCategories();
                     $productCategory->product_id = $product->id;
                     $productCategory->category_id = $category;
                     $productCategory->save();
                 }
-                
+
                 \DB::commit();
-                
+
                 Alert::success('Success', 'Sukses mengubah data product');
                 return redirect()->route('admin.product.index');
-                
+
             } catch (\Exception $e) {
                 \DB::rollback();
                 Alert::error('Error', $e->getMessage());
                 return back();
             }
         }
-        
+
         public function destroy($id)
         {
             $category = Product::find($id);
             $category->delete();
-            
+
             Alert::success('Success', 'Sukses menghapus data produk');
             return redirect()->route('admin.product.index');
         }

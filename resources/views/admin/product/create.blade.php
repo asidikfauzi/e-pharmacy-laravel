@@ -62,8 +62,7 @@
 											<label class="form-control-placeholder" for="password">Kontra Indikasi Produk</label>
 											<textarea id="password-field" type="" name="kontra_indikasi" rows="4" cols="50" class="form-control"></textarea>
 										</div>
-										<div class="form-group">
-											<label class="form-control-placeholder" for="password">Efek Samping Produk</label>
+										<div class="form-group">Efek Samping Produk</label>
 											<textarea id="password-field" type="" name="efek_samping" rows="4" cols="50" class="form-control"></textarea>
 										</div>
 										<div class="form-group">

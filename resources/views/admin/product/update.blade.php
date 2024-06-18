@@ -83,22 +83,38 @@
 											<label class="form-control-placeholder" for="password">Image Produk</label>
 											<input type="file" name="image" class="form-control-file">
 										</div>
-										@foreach($selectedCategories as $index => $selected)
-											<div class="form-group destinasi-form" id="destinasi-form-{{ $index }}">
-												<label class="form-control-placeholder">Kategori Product</label>
-												<select name="categories[]" class="form-control select2" size="10" multiple>
-													@foreach($categories as $value)
-														<option value="{{ $value->id }}"
-														        @if($value->id == $selected) selected @endif>
-															{{ $value->nama }}
-														</option>
-													@endforeach
-												</select>
-												<div class="text-sm-right">
-													<button type="button" class="btn btn-danger mt-1 delete-destinasi">-</button>
-												</div>
-											</div>
-										@endforeach
+                                        @if(count($selectedCategories) > 0 )
+                                            @foreach($selectedCategories as $index => $selected)
+                                                <div class="form-group destinasi-form" id="destinasi-form-{{ $index }}">
+                                                    <label class="form-control-placeholder">Kategori Product</label>
+                                                    <select name="categories[]" class="form-control select2" size="10" multiple>
+                                                        @foreach($categories as $value)
+                                                            <option value="{{ $value->id }}"
+                                                                    @if($value->id == $selected) selected @endif>
+                                                                {{ $value->nama }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="text-sm-right">
+                                                        <button type="button" class="btn btn-danger mt-1 delete-destinasi">-</button>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            <div class="form-group destinasi-form" id="destinasi-form-{{ $index }}">
+                                                <label class="form-control-placeholder">Kategori Product</label>
+                                                <select name="categories[]" class="form-control select2" size="10" multiple>
+                                                    @foreach($categories as $value)
+                                                        <option value="{{ $value->id }}">
+                                                            {{ $value->nama }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="text-sm-right">
+                                                    <button type="button" class="btn btn-danger mt-1 delete-destinasi">-</button>
+                                                </div>
+                                            </div>
+                                        @endif
 										<div class="text-sm-right" >
 											<button type="button" id="add-destinasi" class="btn btn-dark mb-3">+</button>
 										</div>

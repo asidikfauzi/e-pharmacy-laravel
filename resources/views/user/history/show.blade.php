@@ -9,6 +9,7 @@
 	@foreach($payment->product as $product)
 		<div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
 			<p><strong>Nama:</strong> {{ $product->nama }}</p>
+			<p><strong>Jumlah:</strong> {{ $product->qty }}</p>
 			<p><strong>Harga:</strong> Rp. {{ number_format($product->price, 0, ',') }}</p>
 			<p><img src="{{ asset($product->image) }}" alt="{{ $product->nama }}" style="max-width: 100px;"></p>
 		</div>

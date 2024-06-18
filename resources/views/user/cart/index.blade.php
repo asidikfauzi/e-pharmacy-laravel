@@ -22,76 +22,79 @@
 	<!-- Shoping Cart Section Begin -->
 	<section class="shoping-cart spad">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="shoping__cart__table">
-						<table>
-							<thead>
-							<tr>
-								<th class="shoping__product">Produk</th>
-								<th>Harga</th>
-								<th>Jumlah</th>
-								<th>Total</th>
-								<th></th>
-							</tr>
-							</thead>
-							<tbody>
-							@foreach($carts as $value)
-								<tr>
-									<td class="shoping__cart__item">
-										<img src="{{asset('assets/images/product/'.$value->image)}}" alt="" style="max-width: 40px">
-										<h5>{{$value->nama}}</h5>
-									</td>
-									<td class="shoping__cart__price">
-										Rp. {{number_format($value->price, 0, ',')}}
-									</td>
-									<td class="shoping__cart__quantity">
-										<div class="quantity">
-											<div class="pro-qty quantity-input" data-product-id="{{$value->id}}" data-price="{{$value->price}}">
-												<input type="text" name="jumlah" class="quantity-input" value="{{$value->total_quantity}}">
-											</div>
-										</div>
-									</td>
-									<td class="shoping__cart__total" id="total-{{$value->id}}">
-										Rp. {{number_format($value->price * $value->total_quantity, 0, ',')}}
-									</td>
-									<td class="shoping__cart__item__close modal-deletetab" data-id="{{$value->id_cart}}">
-										<span class="icon_close"></span>
-									</td>
-								</tr>
-							@endforeach
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="shoping__cart__btns">
-						<a href="{{route('shop')}}" class="primary-btn cart-btn">LANJUT BELANJA</a>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="shoping__continue">
-						<div class="shoping__discount">
+            <form method="POST" action="{{route('user.payment.store')}}">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="shoping__cart__table">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th class="shoping__product">Produk</th>
+                                    <th>Harga</th>
+                                    <th>Jumlah</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($carts as $value)
 
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<form method="POST" action="{{route('user.payment.store')}}">
-						@csrf
-						<div class="shoping__checkout">
-							<h5>Cart Total</h5>
-							<ul>
-								<li>Total <span id="cart-total-amount">Rp. {{number_format($total, 0, ',')}}</span></li>
-							</ul>
-							<button type="submit" class="btn primary-btn" style="width: 100%">LANJUTKAN PEMBAYARAN</button>
+                                    <input type="hidden" name="product_id[{{$value->id}}]" value="{{$value->id}}">
+                                    <tr>
+                                        <td class="shoping__cart__item">
+                                            <img src="{{asset('assets/images/product/'.$value->image)}}" alt="" style="max-width: 40px">
+                                            <h5>{{$value->nama}}</h5>
+                                        </td>
+                                        <td class="shoping__cart__price">
+                                            Rp. {{number_format($value->price, 0, ',')}}
+                                        </td>
+                                        <td class="shoping__cart__quantity">
+                                            <div class="quantity">
+                                                <div class="pro-qty quantity-input" data-product-id="{{$value->id}}" data-price="{{$value->price}}">
+                                                    <input type="text" name="jumlah[{{$value->id}}]" class="quantity-input" value="{{$value->total_quantity}}">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="shoping__cart__total" id="total-{{$value->id}}">
+                                            Rp. {{number_format($value->price * $value->total_quantity, 0, ',')}}
+                                        </td>
+                                        <td class="shoping__cart__item__close modal-deletetab" data-id="{{$value->id_cart}}">
+                                            <span class="icon_close"></span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="shoping__cart__btns">
+                            <a href="{{route('shop')}}" class="primary-btn cart-btn">LANJUT BELANJA</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="shoping__continue">
+                            <div class="shoping__discount">
 
-						</div>
-					</form>
-				</div>
-			</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+
+                            @csrf
+                            <div class="shoping__checkout">
+                                <h5>Cart Total</h5>
+                                <ul>
+                                    <li>Total <span id="cart-total-amount">Rp. {{number_format($total, 0, ',')}}</span></li>
+                                </ul>
+                                <button type="submit" class="btn primary-btn" style="width: 100%">LANJUTKAN PEMBAYARAN</button>
+
+                            </div>
+                    </div>
+                </div>
+            </form>
 		</div>
 	</section>
 	<!-- Shoping Cart Section End -->

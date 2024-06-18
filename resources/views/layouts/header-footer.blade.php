@@ -65,6 +65,7 @@
 										<a class="dropdown-item" href="{{route('admin.index')}}">Dashboard</a>
 									@else
 										<a class="dropdown-item" href="{{route('user.index')}}">Profile</a>
+										<a class="dropdown-item" href="{{route('user.history.index')}}">Pesanan Saya</a>
 									@endif
 									<a class="dropdown-item" href="{{route('user.address.index')}}">Alamat</a>
 									<a class="dropdown-item" href="{{route('password')}}">Ganti Password</a>
