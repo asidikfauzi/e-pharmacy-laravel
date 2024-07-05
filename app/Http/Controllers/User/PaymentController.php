@@ -68,7 +68,6 @@
             $payment->nota = Payment::generateInvoiceCode();
             $payment->list_produk = $listProductsJson;
             $payment->total = $total;
-            $payment->status = false;
             $payment->save();
 
             return redirect()->route('user.payment.index', $payment->id);

@@ -52,7 +52,7 @@
         }
 
         public function store($id)
-        {
+        {;
             $cart = new Cart();
             $cart->user_id = auth()->user()->id;
             $cart->product_id = $id;

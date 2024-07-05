@@ -129,10 +129,14 @@
                             data: 'status',
                             name: 'status',
                             render: function(data, type, row) {
-                                if (data == 0 || data == false) {
-                                    return '<span style="color: red;">Menunggu</span>';
+                                if (data === 'PENDING') {
+                                    return '<span style="color: orange;">PENDING</span>';
+                                } else if (data === 'FAILED') {
+                                    return '<span style="color: red;">FAILED</span>';
+                                } else if (data === 'SUCCESS') {
+                                    return '<span style="color: green;">SUCCESS</span>';
                                 } else {
-                                    return '<span style="color: green;">Sukses</span>';
+                                    return '<span>' + data + '</span>'; // Jika ada status lain yang tidak dikenali
                                 }
                             }
                         },

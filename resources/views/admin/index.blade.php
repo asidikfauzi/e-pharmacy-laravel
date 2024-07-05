@@ -24,10 +24,12 @@
 				<div class="admin_dashboard owl-carousel">
 					<div class="col-lg-3">
 						<div class="categories__item set-bg">
-							<center>
-								<img src="{{asset('assets/img/app/order.png')}}" style="width: 200px; height: 200px">
-							</center>
-							<h5><a href="#">Pesanan Masuk</a></h5>
+                            <a href="{{route('admin.order.index')}}">
+                                <center>
+                                    <img src="{{asset('assets/img/app/order.png')}}" style="width: 200px; height: 200px">
+                                </center>
+                                <h5><a href="#">Pesanan Masuk</a></h5>
+                            </a>
 						</div>
 					</div>
 					<div class="col-lg-3">
@@ -52,10 +54,12 @@
 					</div>
 					<div class="col-lg-3">
 						<div class="categories__item set-bg">
-							<center>
-								<img src="{{asset('assets/img/app/recap.png')}}" style="width: 200px; height: 200px">
-							</center>
-							<h5><a href="#">Rekap Penghasilan</a></h5>
+                            <a href="{{route('admin.recap.index')}}">
+                                <center>
+                                    <img src="{{asset('assets/img/app/recap.png')}}" style="width: 200px; height: 200px">
+                                </center>
+                                <h5><a href="#">Rekap Penghasilan</a></h5>
+                            </a>
 						</div>
 					</div>
 				</div>
