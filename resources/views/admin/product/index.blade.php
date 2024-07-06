@@ -106,7 +106,11 @@
                         },
                         {data: 'image', name: 'image'},
                         {data: 'nama', name: 'nama'},
-                        {data: 'price', name: 'price'},
+                        { data: 'price', name: 'price',
+                            render: function(data, type, row) {
+                                return 'Rp. ' + parseFloat(data).toLocaleString('id-ID');
+                            }
+                        },
                         {data: 'stok', name: 'stok'},
                         {data: 'golongan_produk', name: 'golongan_produk'},
                         {data: 'categories', name: 'categories'},

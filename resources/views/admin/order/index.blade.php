@@ -123,7 +123,11 @@
                         },
                         {data: 'nota', name: 'nota'},
                         {data: 'nama', name: 'nama'},
-                        {data: 'total', name: 'total'},
+                        { data: 'total', name: 'total',
+                            render: function(data, type, row) {
+                                return 'Rp. ' + parseFloat(data).toLocaleString('id-ID');
+                            }
+                        },
                         {data: 'image', name: 'image'},
                         {
                             data: 'status',

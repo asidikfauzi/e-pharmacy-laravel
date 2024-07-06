@@ -58,25 +58,24 @@
 
                             <table class="table table-bordered data-tables" style="width: 100%">
                                 <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Nota</th>
-                                    <th>Pemesan</th>
-                                    <th>Total</th>
-                                    <th>Bukti Pembayaran</th>
-                                    <th>Detail</th>
-                                    <th>Total</th>
-                                </tr>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Nota</th>
+                                        <th>Pemesan</th>
+                                        <th>Bukti Pembayaran</th>
+                                        <th>Detail</th>
+                                        <th>Total</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                </tr>
+                                    <tr>
+                                    </tr>
                                 </tbody>
                                 <tfoot>
-                                <tr>
-                                    <th colspan="6" style="text-align:right">Total:</th>
-                                    <th id="total-payments"></th>
-                                </tr>
+                                    <tr>
+                                        <th colspan="5" style="text-align:right">Total:</th>
+                                        <th id="total-payments"></th>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -112,29 +111,28 @@
 
 @section('script')
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function() {
             fetch_data();
-            function fetch_data(month = '', year = '')
-            {
+
+            function fetch_data(month = '', year = '') {
                 $('.data-tables').DataTable({
                     language: {
                         searchPlaceholder: 'Search...',
-                        sEmptyTable:   'Tidak ada data yang tersedia pada tabel ini',
-                        sProcessing:   'Sedang memproses...',
-                        sZeroRecords:  'Tidak ditemukan data yang sesuai',
-                        sInfo:         'Menampilkan _START_ sampai _END_ dari _TOTAL_ entri',
-                        sInfoEmpty:    'Menampilkan 0 sampai 0 dari 0 entri',
+                        sEmptyTable: 'Tidak ada data yang tersedia pada tabel ini',
+                        sProcessing: 'Sedang memproses...',
+                        sZeroRecords: 'Tidak ditemukan data yang sesuai',
+                        sInfo: 'Menampilkan _START_ sampai _END_ dari _TOTAL_ entri',
+                        sInfoEmpty: 'Menampilkan 0 sampai 0 dari 0 entri',
                         sInfoFiltered: '(disaring dari _MAX_ entri keseluruhan)',
-                        sInfoPostFix:  '',
-                        sSearch:       '',
-                        sUrl:          '',
+                        sInfoPostFix: '',
+                        sSearch: '',
+                        sUrl: '',
                         oPaginate: {
-                            sFirst:    'Pertama',
+                            sFirst: 'Pertama',
                             sPrevious: 'Sebelumnya',
-                            sNext:     'Selanjutnya',
-                            sLast:     'Terakhir'
+                            sNext: 'Selanjutnya',
+                            sLast: 'Terakhir'
                         }
                     },
                     destroy: true,
@@ -146,48 +144,40 @@
                     scrollCollapse: true,
                     fixedColumns: { heightMatch: 'none' },
                     ajax: {
-                        url:"{{ route('admin.recap.getData') }}",
+                        url: "{{ route('admin.recap.getData') }}",
                         data: { month: month, year: year },
-                        // dataSrc: function(json) {
-                        //     // You can access json.total, json.total_credit, json.total_balance here
-                        //     $('#total-payments').text(json.total_payments);
-                        //     return json.data;
-                        // }
+                        dataSrc: function(json) {
+                            return json.data;
+                        }
                     },
-                    columns:[
-                        {data: 'id',
+                    columns: [
+                        { data: 'id',
                             render: function (data, type, row, meta) {
                                 return meta.row + meta.settings._iDisplayStart + 1;
                             }
                         },
-                        {data: 'nota', name: 'nota'},
-                        {data: 'nama', name: 'nama'},
-                        {data: 'total', name: 'total'},
-                        {data: 'image', name: 'image'},
-                        {data: 'show', name: 'show'},
+                        { data: 'nota', name: 'nota' },
+                        { data: 'nama', name: 'nama' },
+                        { data: 'image', name: 'image' },
+                        { data: 'show', name: 'show' },
+                        { data: 'total', name: 'total',
+                            render: function(data, type, row) {
+                                return 'Rp. ' + parseFloat(data).toLocaleString('id-ID');
+                            }
+                        },
                     ],
-                    // footerCallback: function (row, data, start, end, display) {
-                    //     var api = this.api();
-                    //
-                    //     // Function to remove formatting and get integer data for summation
-                    //     var intVal = function (i) {
-                    //         return typeof i === 'string' ?
-                    //             i.replace(/[\$,]/g, '') * 1 :
-                    //             typeof i === 'number' ?
-                    //                 i : 0;
-                    //     };
-                    //
-                    //     // Total over all pages
-                    //     var totalPayments = api
-                    //         .column(7)
-                    //         .data()
-                    //         .reduce(function (a, b) {
-                    //             return intVal(a) + intVal(b);
-                    //         }, 0);
-                    //
-                    //     // Update footer
-                    //     $(api.column(7).footer()).html('Rp. ' + totalPayments.toLocaleString('id-ID'));
-                    // }
+                    footerCallback: function (row, data, start, end, display) {
+                        var api = this.api();
+
+                        // Summing up the total payments
+                        var totalPayments = 0;
+                        data.forEach(function(payment) {
+                            totalPayments += parseFloat(payment.total);
+                        });
+
+                        // Update footer
+                        $(api.column(5).footer()).html('Rp. ' + totalPayments.toLocaleString('id-ID'));
+                    }
                 });
             }
 
@@ -202,7 +192,7 @@
                 $.ajax({
                     url: "/admin/order/" + id,
                     method: 'GET',
-                    data: {id: id},
+                    data: { id: id },
                     success: function(response) {
                         $('#paymentDetails').html(response);
                         $('#paymentModal').modal('show');
@@ -211,5 +201,4 @@
             });
         });
     </script>
-
 @endsection
